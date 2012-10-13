@@ -1,0 +1,91 @@
+cre8PropelTreePlugin
+====================
+
+This plugin allows you to use and manage calendar of events (single and recurring).
+
+Features
+--------
+The plugin already has a few modules:
+* cre8_tree [frontend + backend] - this module adds some features to manage category tree
+
+Requirements
+------------
+Plugin is based on Propel ORM. It require Propel 1.5:
+    http://www.symfony-project.org/plugins/sfPropel15Plugin
+
+You also need do add some javascript libraries:
+  - jQuery (tested with 1.4.2)
+
+
+
+Installation
+------------
+
+Copy plugin directory to plugins directory in your project structure.
+Enable plugin in project configuration:
+    $this->enablePlugins('cre8PropelTreePlugin');
+
+In settings.yml add modules:
+     cre8_tree
+
+Rebuild model, forms and filters with command:
+    symfony propel:build --model --forms --filters
+
+Also build sql and insert into database.
+
+Configure plugin javascript and css files with:
+    symfony plugin:publish-assets
+
+In a frontend and backend app.yml add this options to enable routes:
+  cre8_propel_tree_plugin:
+     routes_register:  true
+
+
+
+Extra configuration
+-------------------
+
+By default plugin use route 'cre8_tree_operation' for operations on tree. You can customize it by adding option in app.yml
+    cre8_propel_tree_plugin:
+        opeation_route: your_route
+
+If you enable jsTree "hotkeys" o "cookies" plugin, tree plugin include to response appropieate jQuery libraries.
+Sometimes you may need to disable this behavior. you can do this by:
+    cre8_propel_tree_plugin:
+      jquery_cookies_enable:  false
+
+    cre8_propel_tree_plugin:
+      jquery_hotkeys_enable:  false
+
+    cre8_propel_tree_plugin:
+        tree_types:
+            available:  [ menu, set, dish, component ]
+            menu:       [ set, dish, component ]
+            set:        [ dish, component ]
+            dish:       [ component ]
+            component:  [ none ]
+
+Usage
+-----
+
+To display dynamic tree just put in your template thic code (rootId param is required, because it's used to retrieve tree from database):
+    <?php include_component('cre8_tree', 'tree', array('rootId' => 1)) ?>
+
+
+Extending
+---------
+
+To extend plugin you can use event dispatcher listeners. To see sample implementation check out /lib/listener/cre8JsTreeEventListener.class.php
+There are available events:
+    - cre8_tree.tree_types_setup
+    - cre8_tree.tree_contextmenu_setup
+
+
+
+Important
+---------
+
+
+
+Activity
+--------

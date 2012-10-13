@@ -1,0 +1,23 @@
+connection:           propel
+noXsd:                false
+defaultIdMethod:      native
+package:              plugins.cre8PropelTreePlugin.lib.model
+
+classes:
+  cre8CategoryTree:
+    tableName:         cre8_category_tree
+    propel_behaviors:
+      nested_set:
+        left_column:   left
+        right_column:  right
+        level_column:  level
+        use_scope:     true
+      sluggable:
+        slug_pattern: '{Name}'
+    columns:
+      id:     ~
+      name:  { type: varchar, size: 255, required: true }
+      description: { type: longvarchar, required: true }
+      type:  { type: varchar, size: 255 }
+      updated_at:  ~
+      created_at:  ~
